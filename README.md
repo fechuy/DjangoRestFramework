@@ -1,0 +1,1 @@
+Test del framework REST de Django
