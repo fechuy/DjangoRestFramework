@@ -2,10 +2,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import get_list_or_404, get_object_or_404
 
+from rest_framework import generics
+
 from .models import Producto
 from .serializers import ProductSerializer
 
-class ProductList(APIView):
+"""class ProductList(APIView):
     def get(self, req):
         prod = Producto.objects.all()[:20]
         data = ProductSerializer(prod, many = True).data
@@ -15,4 +17,12 @@ class ProductDetalle(APIView):
     def get(self, req, pk):
         prod = get_object_or_404(Producto, pk=pk)
         data = ProductSerializer(prod).data
-        return Response(data)
+        return Response(data)"""
+
+class ProductList(generics.ListCreateAPIView):
+    queryset = Producto.objects.all()
+    serializer_class = ProductSerializer
+
+class ProductDetalle(generics.RetrieveDestroyAPIView):
+    queryset = Producto.objects.all()
+    serializer_class = ProductSerializer
